@@ -1,6 +1,6 @@
 # uv Package Manager Usage Guide
 
-This guide provides a clean and structured overview of using the `uv` package and environment manager in Python projects.
+This guide provides a clean and structured overview of using the `uv` package and environment manager in Python projects, including compatibility with `pip` users.
 
 ---
 
@@ -14,6 +14,8 @@ Install `uv` globally using pip:
 pip install uv
 ```
 
+---
+
 ### 2. Initialize a New Project (optional)
 
 If you're starting a new project:
@@ -22,88 +24,134 @@ If you're starting a new project:
 uv init
 ```
 
-> This will create a `pyproject.toml` file.
+This creates a `pyproject.toml` file.
+
+---
 
 ### 3. Create a Virtual Environment
 
 ```bash
-uv venv --python 3.12
+uv venv --python 3.13
 ```
 
-> This creates a virtual environment in the `.venv/` directory.
+This creates a virtual environment in the `.venv/` directory.
+
+---
 
 ### 4. Activate the Virtual Environment
 
-* **macOS/Linux**:
+**macOS / Linux**
 
-  ```bash
-  source .venv/bin/activate
-  ```
+```bash
+source .venv/bin/activate
+```
 
-* **Windows**:
+**Windows**
 
-  ```bash
-  .venv\Scripts\activate
-  ```
+```bash
+.venv\Scripts\activate
+```
 
-### 5. Install Dependencies from `requirements.txt`
+---
+
+## 📦 Installing Dependencies
+
+### From `requirements.txt`
 
 ```bash
 uv add -r requirements.txt
 ```
 
-> This adds the dependencies to `pyproject.toml` and installs them in the environment.
+This adds the dependencies to `pyproject.toml` and installs them into the environment.
 
-### 6. Sync with Lockfile (Exact Versions)
+---
+
+### Sync Using the Lockfile (Exact Versions)
 
 ```bash
 uv sync --frozen
 ```
 
-> This installs dependencies exactly as listed in `uv.lock`.
+Installs dependencies exactly as pinned in `uv.lock`.
 
 ---
 
-## 📦 Common uv Commands
+## 🔁 Exporting Dependencies for pip Users
 
-* **Add a new dependency**:
+To allow users **without uv** to install dependencies using pip, export a compatible `requirements.txt` file.
 
-  ```bash
-  uv add <package>
-  ```
+### Fully reproducible (with hashes)
 
-* **Update all dependencies**:
+```bash
+uv export > requirements.txt
+```
 
-  ```bash
-  uv sync
-  ```
+Install using pip:
 
-* **Export to `requirements.txt`**:
+```bash
+pip install --require-hashes -r requirements.txt
+```
 
-  ```bash
-  uv export > requirements.txt
-  ```
+---
 
-* **Run commands in the environment**:
+### Pip-friendly (no hashes)
 
-  ```bash
-  uv run <command>
-  ```
+```bash
+uv export --no-hashes > requirements.txt
+```
+
+Install using pip:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🛠 Common uv Commands
+
+Add a new dependency:
+
+```bash
+uv add <package>
+```
+
+Update all dependencies:
+
+```bash
+uv sync
+```
+
+Run a command inside the environment:
+
+```bash
+uv run <command>
+```
 
 ---
 
 ## ❗ Troubleshooting
 
-* **Dependency conflicts**:
+### Dependency conflicts
 
-  Run:
+```bash
+uv sync
+```
 
-  ```bash
-  uv sync
-  ```
+---
 
-* **Python version mismatch**:
+### Python version mismatch
 
-  Ensure Python 3.12 is installed and correctly referenced in your shell or IDE.
+Ensure Python **3.13** is installed and correctly referenced by your shell or IDE.
+
+---
+
+## ✅ Recommended Repo Layout
+
+For best compatibility:
+
+* `pyproject.toml` – source of truth
+* `uv.lock` – exact, reproducible dependency lock
+* `requirements.txt` – for pip-only users
 
 ---
