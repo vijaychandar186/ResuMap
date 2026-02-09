@@ -1,0 +1,9 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - RESUMAP_MODEL_N_CTX=8192
+      - RESUMAP_MODEL_N_THREADS=4
+    restart: unless-stopped
