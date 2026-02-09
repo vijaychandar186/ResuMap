@@ -1,10 +1,12 @@
 import json
 
 RESUME_TEMPLATE: dict = {
-    "name": "",
-    "email": "",
-    "phone": "",
-    "location": "",
+    "personal_information": {
+        "name": "",
+        "email": "",
+        "phone": "",
+        "location": "",
+    },
     "skills": [],
     "experience": [
         {

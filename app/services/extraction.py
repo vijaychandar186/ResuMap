@@ -26,6 +26,10 @@ def enforce_schema(parsed: dict, template: dict) -> dict:
     for key, value in template.items():
         if key not in parsed:
             parsed[key] = value
+        elif isinstance(value, dict) and isinstance(parsed[key], dict):
+            for k, v in value.items():
+                if k not in parsed[key]:
+                    parsed[key][k] = v
     return parsed
 
 

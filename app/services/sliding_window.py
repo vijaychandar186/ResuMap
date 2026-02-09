@@ -104,7 +104,8 @@ def sliding_window_extract(
     for i, chunk in enumerate(chunks):
         logger.info("Processing chunk %d/%d ...", i + 1, len(chunks))
 
-        current = clean_json_text(prev)
+        # Skip ### Current: on the first chunk so the model doesn't echo the empty template
+        current = clean_json_text(prev) if i > 0 else None
         prompt = _build_prompt(template_str, chunk, current=current)
 
         raw_output = llm_service.generate(prompt, max_tokens=settings.max_new_tokens)

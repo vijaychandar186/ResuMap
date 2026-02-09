@@ -15,11 +15,15 @@ class EducationItem(BaseModel):
     year: str = ""
 
 
-class ResumeExtraction(BaseModel):
+class PersonalInformation(BaseModel):
     name: str = ""
     email: str = ""
     phone: str = ""
     location: str = ""
+
+
+class ResumeExtraction(BaseModel):
+    personal_information: PersonalInformation = Field(default_factory=PersonalInformation)
     skills: list[str] = Field(default_factory=list)
     experience: list[ExperienceItem] = Field(default_factory=list)
     education: list[EducationItem] = Field(default_factory=list)
