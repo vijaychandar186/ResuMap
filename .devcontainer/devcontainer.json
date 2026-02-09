@@ -5,14 +5,13 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/base:bookworm",
 	"features": {
+		"ghcr.io/devcontainers/features/git-lfs:1": {},
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-		"ghcr.io/devcontainers/features/python:1": {
-			"version": "3.13"
-		},
+		"ghcr.io/devcontainers/features/python:1": {},
 		"ghcr.io/va-h/devcontainers-features/uv:1": {}
 	},
 
-	"postCreateCommand": "uv sync",
+	"postCreateCommand": "uv sync && git lfs pull"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

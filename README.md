@@ -23,28 +23,22 @@ app/
     templates.py       # Resume JSON template
 models/
   *.gguf               # Fine-tuned model files (Git LFS)
-data/
-  train.jsonl          # Training data for fine-tuning
-finetune_nuextract_resume.ipynb  # Fine-tuning notebook for Colab
+train/
+  data/
+    train.jsonl          # Training data for fine-tuning
+  finetune_nuextract_resume.ipynb  # Fine-tuning notebook for Colab
 ```
 
 ## Setup
 
 ### Prerequisites
 
-1. **Clone the repository with Git LFS** (for model files):
-   ```bash
-   git lfs install
-   git clone <your-repo-url>
-   cd ResuMap
-   ```
-
-2. **If no model exists**, fine-tune one first:
-   - Upload `finetune_nuextract_resume.ipynb` and `data/train.jsonl` to Google Colab
-   - Run all cells (uses free T4 GPU)
-   - Download the exported GGUF files
-   - Copy to `models/nuextract-resume-f16.gguf`
-
+**Clone the repository with Git LFS** (for model files):
+```bash
+git lfs install
+git clone https://github.com/vijaychandar186/ResuMap
+cd ResuMap
+```
 ### Option 1: pip
 
 ```bash
