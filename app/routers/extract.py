@@ -29,8 +29,6 @@ async def extract_from_file(
 ) -> ExtractionResponse:
     """Upload a resume file (PDF or DOCX) and extract structured data."""
     text = await extract_text_from_upload(file)
-    logger.info("Extracted %d chars from %s", len(text), file.filename)
-    logger.info("Text preview: %s", text[:500])
 
     if not text.strip():
         raise HTTPException(status_code=422, detail="No text content found in file.")

@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     # Inference
     max_new_tokens: int = 2048
     temperature: float = 0.0
-    stop_tokens: list[str] = ["</s>", "<|im_end|>"]
+    stop_tokens: list[str] = ["</s>", "<|im_end|>", "<|end-output|>"]
 
     # Sliding window
     sliding_window_overlap: int = 128

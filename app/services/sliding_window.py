@@ -14,20 +14,15 @@ def clean_json_text(text: str) -> str:
 
 
 def _build_prompt(template: str, text: str, current: str | None = None) -> str:
-    """Build NuExtract prompt wrapped in ChatML format for GGUF models.
+    """Build NuExtract prompt using the model's native format.
 
-    The NuExtract extraction instruction goes inside a ChatML user message,
-    and the assistant turn is left open for the model to generate the JSON.
+    NuExtract uses <|input|>...<|output|> markers directly,
+    without ChatML wrapping.
     """
-    inner = f"<|input|>\n### Template:\n{template}\n"
+    prompt = f"<|input|>\n### Template:\n{template}\n"
     if current is not None:
-        inner += f"### Current:\n{current}\n"
-    inner += f"### Text:\n{text}\n\n<|output|>"
-
-    prompt = (
-        f"<|im_start|>user\n{inner}<|im_end|>\n"
-        f"<|im_start|>assistant\n"
-    )
+        prompt += f"### Current:\n{current}\n"
+    prompt += f"### Text:\n{text}\n\n<|output|>\n"
     return prompt
 
 
