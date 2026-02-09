@@ -8,10 +8,10 @@ RESUME_TEMPLATE: dict = {
         "location": "",
     },
     "skills": [],
-    "experience": [
+    "work_experience": [
         {
-            "company": "",
-            "title": "",
+            "employer": "",
+            "job_title": "",
             "start_date": "",
             "end_date": "",
             "location": "",
@@ -21,7 +21,7 @@ RESUME_TEMPLATE: dict = {
         {
             "degree": "",
             "institution": "",
-            "year": "",
+            "graduation_year": "",
         }
     ],
 }

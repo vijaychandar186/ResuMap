@@ -2,8 +2,8 @@ from pydantic import BaseModel, Field
 
 
 class ExperienceItem(BaseModel):
-    company: str = ""
-    title: str = ""
+    employer: str = ""
+    job_title: str = ""
     start_date: str = ""
     end_date: str = ""
     location: str = ""
@@ -12,7 +12,7 @@ class ExperienceItem(BaseModel):
 class EducationItem(BaseModel):
     degree: str = ""
     institution: str = ""
-    year: str = ""
+    graduation_year: str = ""
 
 
 class PersonalInformation(BaseModel):
@@ -25,7 +25,7 @@ class PersonalInformation(BaseModel):
 class ResumeExtraction(BaseModel):
     personal_information: PersonalInformation = Field(default_factory=PersonalInformation)
     skills: list[str] = Field(default_factory=list)
-    experience: list[ExperienceItem] = Field(default_factory=list)
+    work_experience: list[ExperienceItem] = Field(default_factory=list)
     education: list[EducationItem] = Field(default_factory=list)
 
 

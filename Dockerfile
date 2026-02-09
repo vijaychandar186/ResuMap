@@ -16,10 +16,9 @@ RUN uv sync --frozen
 
 # Copy application code
 COPY app/ ./app/
-COPY scripts/ ./scripts/
 
-# Download model at build time so it's baked into the image
-RUN /app/.venv/bin/python -m scripts.download_model
+# Copy fine-tuned GGUF model from Git LFS
+COPY models/ ./models/
 
 ENV RESUMAP_MODEL_N_CTX=8192
 ENV RESUMAP_MODEL_N_THREADS=4

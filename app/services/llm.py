@@ -13,12 +13,12 @@ class LLMService:
         self._llm: Llama | None = None
 
     def load(self) -> None:
-        """Load model from local disk. Run scripts/download_model.py first."""
+        """Load fine-tuned GGUF model from local disk (stored in Git LFS)."""
         model_path = self.settings.model_path
         if not model_path.exists():
             raise FileNotFoundError(
                 f"Model not found at {model_path}. "
-                "Run 'python -m scripts.download_model' to download it."
+                "Fine-tune the model using finetune_nuextract_resume.ipynb and add the GGUF file to models/"
             )
 
         logger.info("Loading model from %s with n_ctx=%d ...", model_path, self.settings.model_n_ctx)
@@ -50,6 +50,7 @@ class LLMService:
             prompt,
             max_tokens=max_tokens or self.settings.max_new_tokens,
             temperature=self.settings.temperature,
+            repeat_penalty=self.settings.repeat_penalty,
             stop=self.settings.stop_tokens,
         )
         return result["choices"][0]["text"]

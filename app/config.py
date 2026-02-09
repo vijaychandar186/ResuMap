@@ -7,8 +7,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 class Settings(BaseSettings):
     # Model
-    model_repo_id: str = "tensorblock/NuExtract-tiny-v1.5-GGUF"
-    model_filename: str = "NuExtract-tiny-v1.5-Q3_K_M.gguf"
+    model_filename: str = "NuExtract-1.5-tiny.Q8_0.gguf"
     model_dir: Path = _PROJECT_ROOT / "models"
 
     # LLM
@@ -18,7 +17,8 @@ class Settings(BaseSettings):
 
     # Inference
     max_new_tokens: int = 2048
-    temperature: float = 0.0
+    temperature: float = 0.1
+    repeat_penalty: float = 1.11
     stop_tokens: list[str] = ["</s>", "<|im_end|>", "<|end-output|>"]
 
     # Sliding window

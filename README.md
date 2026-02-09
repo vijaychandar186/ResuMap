@@ -1,8 +1,8 @@
 # ResuMap
 
-Resume extraction API powered by [NuExtract](https://huggingface.co/numind/NuExtract-tiny-v1.5). Upload a PDF or DOCX resume and get back structured JSON with contact info, skills, experience, and education.
+Resume extraction API powered by a fine-tuned [NuExtract-1.5-tiny](https://huggingface.co/numind/NuExtract-1.5-tiny) model. Upload a PDF or DOCX resume and get back structured JSON with contact info, skills, experience, and education.
 
-Built with FastAPI and llama-cpp-python. Uses a sliding window approach to handle long documents within the model's 8192-token context window.
+Built with FastAPI and llama-cpp-python. Uses a sliding window approach to handle long documents within the model's 8192-token context window. The fine-tuned GGUF model is stored in Git LFS.
 
 ## Project Structure
 
@@ -21,11 +21,29 @@ app/
     extraction.py      # Extraction orchestration
   core/
     templates.py       # Resume JSON template
-scripts/
-  download_model.py    # One-time model download
+models/
+  *.gguf               # Fine-tuned model files (Git LFS)
+data/
+  train.jsonl          # Training data for fine-tuning
+finetune_nuextract_resume.ipynb  # Fine-tuning notebook for Colab
 ```
 
 ## Setup
+
+### Prerequisites
+
+1. **Clone the repository with Git LFS** (for model files):
+   ```bash
+   git lfs install
+   git clone <your-repo-url>
+   cd ResuMap
+   ```
+
+2. **If no model exists**, fine-tune one first:
+   - Upload `finetune_nuextract_resume.ipynb` and `data/train.jsonl` to Google Colab
+   - Run all cells (uses free T4 GPU)
+   - Download the exported GGUF files
+   - Copy to `models/nuextract-resume-f16.gguf`
 
 ### Option 1: pip
 
@@ -33,9 +51,6 @@ scripts/
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-
-# Download the model (one-time)
-python -m scripts.download_model
 
 # Start the server
 uvicorn app.main:app --host 0.0.0.0 --port 8000
@@ -45,9 +60,6 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 ```bash
 uv sync
-
-# Download the model (one-time)
-uv run python -m scripts.download_model
 
 # Start the server
 uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
@@ -66,7 +78,7 @@ docker run -p 8000:8000 resumap
 docker compose up --build
 ```
 
-The Docker image downloads the model at build time, so no extra setup is needed.
+**Note:** The fine-tuned GGUF model must exist in `models/` before running.
 
 ## Usage
 
